@@ -5,6 +5,8 @@ datapath = 'C:\Users\blah\Documents\blah\blah\test_scripts\my_data.mat';
 % Each .mat file includes 
 % theta: True angles of signal sources
 % SNR: True SNRs of signal sources
+% K: Number of Snapshots
+% x: Array Data vector/matrix (dim NxK)
 % R_norm: Normalized Sample Covariance Matrix
 % X_ml: AI/ML Surrogate Matrix Estimated from R
 % N: Number of ULA Elements
@@ -15,6 +17,7 @@ datapath = 'C:\Users\blah\Documents\blah\blah\test_scripts\my_data.mat';
 %Convert some data to double to avoid issues
 az_extent = double(az_extent);
 N = double(N);
+K = double(K);
 
 %Create Array Manifold of Steering Vectors
 az_angs = linspace(az_extent(1), az_extent(2), 500);
