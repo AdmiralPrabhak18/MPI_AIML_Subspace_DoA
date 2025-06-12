@@ -1,4 +1,4 @@
-function x = signal_gen (N, d, theta, SNR, K)
+function x = signal_gen (N, d, theta, SNR, K, use_normal)
     %function [x] = signal_gen (ne, d, theta, snr, Nsamp)
     % N = number of elements
     % d = element spacing (wavelengths)
@@ -7,14 +7,19 @@ function x = signal_gen (N, d, theta, SNR, K)
     %       corresponds to length(theta)
     % K = samples (snapshots) of signal
     % x = radiation pattern vector for K snapshots(ne x K) (complex voltage)
-
+    
+    if nargin < 6
+        use_normal = false;
+    end
+    
     s=[];
     for ii=1:length (theta) % For each source
        A(:,ii)=linear_dir_vec(N,d,theta(ii)); % Determine steering vector that corresponds to source DoA
        % sample realizations
-       if ((length(theta)>1) &&(ii==1)) % coherent source
+       if (use_normal) % coherent source
            %s1=ones(1,K) * 10 ^(SNR(ii)/20);   % coherent source
-           s1=(randn(1,K)+1i*randn(1,K))/sqrt(2) * 10 ^(SNR(ii)/20);  %noise source
+           s1 = (((rand(1, K) - 0.5) + 1i*(rand(1,K)-0.5))...
+                * sqrt(6)) * 10.^(SNR(ii)/20);
        else      
            %s1=ones(1,Nsamp) * 10 ^(snr(ii)/20);   % coherent source
            s1=(randn(1,K)+1i*randn(1,K))/sqrt(2) * 10 ^(SNR(ii)/20);  %noise source
